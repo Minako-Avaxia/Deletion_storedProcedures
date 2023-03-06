@@ -1,0 +1,68 @@
+CREATE OR REPLACE PROCEDURE Del_row()
+RETURNS STRING
+LANGUAGE JAVASCRIPT
+EXECUTE AS CALLER
+AS
+$$
+try {
+  const daysInYear = 366;
+  
+  var statement1 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_CUST_ADDRESS_DEFLT WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result1 = statement1.execute();
+  
+  var statement2 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_CUST_CERTIFICATION_HISTORY WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result2 = statement2.execute();
+  
+  var statement3 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_CUST_EDUCATION_PORTLET WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result3 = statement3.execute();
+  
+  var statement4 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_EMP_EMPLOYMENT
+ WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result4 = statement4.execute();
+  
+  var statement5 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_EMP_EMPLOYMENT_TERMINATION WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result5 = statement5.execute();
+  
+  var statement6 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_EMP_JOB WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result6 = statement6.execute();
+  
+  var statement7 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_ORG_DEPT WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result7 = statement7.execute();
+  
+  var statement8 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_ORG_POSITION
+ WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result8 = statement8.execute();
+  
+  var statement9 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_PER_EMAIL
+ WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result9 = statement9.execute();
+  
+  var statement10 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_PER_EMAIL WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result10 = statement10.execute();
+
+var statement11 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_PER_PERSONAL
+ WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result11 = statement11.execute();
+
+  var statement12 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_PER_PHONE
+ WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result12 = statement12.execute();
+
+  var statement13 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_PHOTO
+ WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result13 = statement13.execute();
+  
+   var statement14 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_PICK_LIST_LABEL
+ WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result14 = statement14.execute();
+
+   var statement15 = snowflake.createStatement({sqlText: `DELETE FROM DW_V_PICK_LIST_VALUE_V2 WHERE DATEDIFF(day, process_at, CURRENT_DATE) >= ${daysInYear}`});
+  var result15 = statement15.execute();
+
+  return 'SUCCESS';
+} catch (err) {
+  return 'From catch: ' + err.message;
+}
+$$;
+
+call Del_row();
