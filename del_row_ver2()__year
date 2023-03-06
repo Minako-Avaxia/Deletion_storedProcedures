@@ -1,0 +1,101 @@
+CREATE OR REPLACE PROCEDURE del_row_ver2()
+RETURNS OBJECT
+LANGUAGE JAVASCRIPT
+EXECUTE AS CALLER
+AS
+$$
+try {
+  const process_id = 'usp_dl_m_per_person_delete';
+  snowflake.execute({ sqlText: 'BEGIN;' });
+  snowflake.execute({ sqlText:`
+    DELETE FROM  
+      OD_M_BACKGROUND_WORKEXPERIENCE_PARENT_COMPANY
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_CUST_CERTIFICATIONS_HISTORY
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_CUST_EDUCATION_PORTLET
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_EMP_EMPLOYMENT
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+     OD_M_EMP_EMPLOYMENT_TERMINATION
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_EMP_JOB
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_ORG_DEPT
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_ORG_POSITION
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_PER_ADDRESS_DEFLT
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_PER_EMAIL
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_PER_PERSON	
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  });
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_PER_PERSONAL
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());
+  `});
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+     OD_M_PER_PHONE
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  }); 
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_PHOTO	
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  }); 
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_PICK_LIST_LABEL	
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  }); 
+  snowflake.execute({ sqlText:`
+    DELETE FROM 
+      OD_M_PICK_LIST_VALUE_V2	
+    WHERE TO_DATE(process_at) < DATEADD(year, -1, CURRENT_DATE());`
+  }); 
+  snowflake.execute({ sqlText: `COMMIT;` });
+  return {
+    "status": "SUCCESS"
+  };
+} catch (err) {
+  snowflake.execute({ sqlText: `ROLLBACK;` });
+  throw err;
+}
+$$
+;
+
+call del_row_ver2();
